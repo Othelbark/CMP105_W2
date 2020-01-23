@@ -24,6 +24,8 @@ private:
 	sf::RenderWindow* window;
 	Input* input;
 
-	// Add your object here
+	// Add your objects here
 
+	sf::Font font;
+	sf::Text text;
 };
