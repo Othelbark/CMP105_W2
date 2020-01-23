@@ -23,6 +23,16 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 	int yPos = input->getMouseY();
 	std::string textString = "Mouse: " + std::to_string(xPos) + ", " + std::to_string(yPos);
 	text.setString(textString);
+
+	circle.setFillColor(sf::Color::Green);
+	circle.setRadius(30);
+	circle.setOrigin(30, 30);
+	input->setMouseRDown(false);
+	circle.setPosition(-100, -100);
+
+	//initalise mouse drag variables
+	mouseDragInProces = false;
+	mouseDragStartPos = { 0, 0 };
 }
 
 Level::~Level()
@@ -48,6 +58,31 @@ void Level::handleInput()
 		std::cout << "J, K, and L are pressed." << std::endl;
 	}
 
+	//mouse drag
+	if (input->isMouseLDown() && !mouseDragInProces)
+	{
+		mouseDragInProces = true;
+		mouseDragStartPos = { input->getMouseX(), input->getMouseY() };
+	}
+	if (!input->isMouseLDown() && mouseDragInProces)
+	{
+		mouseDragInProces = false;
+		//calculate the x and y distances
+		int xDrag = abs(mouseDragStartPos.x - input->getMouseX());
+		int yDrag = abs(mouseDragStartPos.y - input->getMouseY());
+
+		float diagonalDrag = sqrt((xDrag * xDrag) + (yDrag * yDrag));
+
+		std::cout << "You dragged the mouse " << diagonalDrag << " pixels." << std::endl;
+	}
+
+	//draw/move and redraw circle on right click
+	if (input->isMouseRDown())
+	{
+		input->setMouseRDown(false);
+		circle.setPosition(input->getMouseX(), input->getMouseY());
+	}
+
 	//escape to quit
 	if (input->isKeyDown(sf::Keyboard::Escape))
 	{
@@ -70,6 +105,7 @@ void Level::render()
 	beginDraw();
 
 	window->draw(text);
+	window->draw(circle);
 
 	endDraw();
 }

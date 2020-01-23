@@ -28,4 +28,10 @@ private:
 
 	sf::Font font;
 	sf::Text text;
+
+	sf::CircleShape circle;
+
+	//varables for mouse drag code
+	bool mouseDragInProces;
+	sf::Vector2i mouseDragStartPos;
 };
