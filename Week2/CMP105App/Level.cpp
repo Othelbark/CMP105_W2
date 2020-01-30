@@ -18,7 +18,6 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::Red);
 	text.setPosition(0, 0);
-
 	int xPos = input->getMouseX();
 	int yPos = input->getMouseY();
 	std::string textString = "Mouse: " + std::to_string(xPos) + ", " + std::to_string(yPos);
